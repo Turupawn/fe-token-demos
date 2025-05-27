@@ -1,4 +1,4 @@
-use std::evm
+use evm
 use solidity::map
 
 contract ERC20 {

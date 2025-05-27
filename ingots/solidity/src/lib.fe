@@ -1,6 +1,6 @@
-pub use std::evm
+pub use evm
 pub use map
-pub use std::evm::{ MemBuffer, StorageBuffer }
+pub use evm::{ MemBuffer, StorageBuffer }
 pub use std::mydefault::MyDefault
 pub use std::codec::{ Cursor, Encode, Decode }
 pub use map::{ Map, Hasher, MapStorage, Entry }
