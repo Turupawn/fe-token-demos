@@ -1,0 +1,59 @@
+pub use std::mydefault::MyDefault
+pub use std::codec::{ Cursor, Encode, Decode }
+pub use std::is_zero::{ IsZero }
+
+pub struct SolidityMapStorage<T, U, H: map::Hasher> {
+    pub hasher: H
+}
+
+impl<T, U, H> map::MapStorage<T, U> for SolidityMapStorage<T, U, H>
+    where T: Encode, U: Encode, U: Decode, U: IsZero, U: MyDefault, H: map::Hasher
+{
+    fn get(mut self, key: T) -> U {
+        match self.entry(key) {
+            map::Entry::Occupied { value, .. } => value
+            map::Entry::Vacant { .. } => U::default()
+        }
+    }
+
+    fn set(mut self, key: T, value: U) -> bool {
+        let storage_key = self.hasher.hash(key)
+        let allocated_storage = evm::salloc(len: U::encode_size())
+        let value_cursor = Cursor {
+            inner: StorageBuffer {
+                ptr: allocated_storage.offset, 
+                len: U::encode_size().upcast() 
+            },
+            pos: 0
+        }
+        value.encode(value_cursor)
+    }
+
+    fn entry(mut self, key: T) -> map::Entry<T, U, SolidityMapStorage<T, U, H>> {
+        let index = self.hasher.hash(key)
+        let mut cursor = Cursor {
+            inner: StorageBuffer {
+                ptr: evm::Ptr { location: index.downcast_truncate() }, 
+                len: U::encode_size().upcast() 
+            },
+            pos: 0
+        }
+
+        let decode_result = U::decode(r: cursor)
+        
+        if decode_result.is_error || decode_result.value.is_zero() {
+            return map::Entry::Vacant { 
+                key,
+                storage: self 
+            }
+        } else {
+            let decode_result = U::decode(r: cursor)
+            map::Entry::Occupied { 
+                key,
+                value: decode_result.value,
+                index: index,
+                storage: self
+            }
+        }
+    }
+}

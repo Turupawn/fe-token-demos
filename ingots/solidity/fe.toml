@@ -1,7 +1,8 @@
-name = "ERC721"
+[ingot]
+name = "solidity"
 version = "0.0.1"
 
 [dependencies]
 std = { path = "../std", version = "0.0.1" }
-evm = { path = "../evm", version = "0.0.1" }
 map = { path = "../map", version = "0.0.1" }
+evm = { path = "../evm", version = "0.0.1" }

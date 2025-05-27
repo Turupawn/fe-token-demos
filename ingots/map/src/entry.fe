@@ -1,0 +1,6 @@
+use ingot::map_storage::{MapStorage}
+
+pub enum Entry<T, U, S: MapStorage<T, U>> {
+    Occupied { pub key: T, pub value: U, pub index: u256, pub storage: S },
+    Vacant { pub key: T, pub storage: S }
+}

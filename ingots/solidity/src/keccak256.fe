@@ -1,0 +1,25 @@
+pub use std::codec::{ Cursor, Encode, Decode }
+
+pub struct Keccak256 {
+    pub slot: u256
+}
+
+impl map::Hasher for Keccak256 {
+    fn hash<T: Encode>(mut self, key: T) -> u256 {
+        let allocated_buffer = evm::malloc(len: 32 + T::encode_size())
+        let mut key_cursor = Cursor {
+            inner: evm::MemBuffer {
+                ptr: allocated_buffer.offset,
+                len: allocated_buffer.len.upcast()
+            },
+            pos: 0
+        }
+
+        self.slot.encode(key_cursor)
+        key.encode(key_cursor)
+
+        let buf = evm::Buf { offset: allocated_buffer.offset, len: allocated_buffer.len }
+        let result: u256 = evm::__keccak256(args: buf)
+        result
+    }
+}

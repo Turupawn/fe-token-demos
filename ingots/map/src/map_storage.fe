@@ -1,0 +1,7 @@
+use ingot::entry::{Entry}
+
+pub trait MapStorage<T, U> {
+    fn get(mut self, key: T) -> U
+    fn set(mut self, key: T, value: U) -> bool
+    fn entry(mut self, key: T) -> Entry<T, U, Self>
+}

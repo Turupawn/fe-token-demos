@@ -1,0 +1,9 @@
+pub trait IsZero {
+    fn is_zero(self) -> bool
+}
+
+pub impl IsZero for u256 {
+    fn is_zero(self) -> bool {
+        self == 0
+    }
+}

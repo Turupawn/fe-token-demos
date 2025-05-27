@@ -1,4 +1,5 @@
-name = "ERC721"
+[ingot]
+name = "map"
 version = "0.0.1"
 
 [dependencies]

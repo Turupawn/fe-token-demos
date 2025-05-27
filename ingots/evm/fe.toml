@@ -1,6 +1,6 @@
+[ingot]
 name = "evm"
 version = "0.0.1"
 
 [dependencies]
 std = { path = "../std", version = "0.0.1" }
-evm = { path = "../evm", version = "0.0.1" }

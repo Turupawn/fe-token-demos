@@ -2,12 +2,8 @@ pub use std::codec::{Encode, Decode}
 pub use std::operators::{Add, Sub, AddAssign, SubAssign}
 pub use std::mydefault::{MyDefault}
 pub use ingot::hasher::{Hasher}
-
-pub trait MapStorage<T, U> {
-    fn get(mut self, key: T) -> U
-    fn set(mut self, key: T, value: U) -> bool
-    fn entry(mut self, key: T) -> Entry<T, U, Self>
-}
+pub use ingot::entry::{Entry}
+pub use ingot::map_storage::{MapStorage}
 
 pub struct Map<T, U, S: MapStorage<T, U>> {
     pub storage: S
@@ -27,11 +23,6 @@ impl<T, U, S: MapStorage<T, U>> Map<T, U, S>
     pub fn entry(mut self, key: T) -> Entry<T, U, S> {
         self.storage.entry(key)
     }
-}
-
-pub enum Entry<T, U, S: MapStorage<T, U>> {
-    Occupied { pub key: T, pub value: U, pub index: u256, pub storage: S },
-    Vacant { pub key: T, pub storage: S }
 }
 
 impl<T, U, S: MapStorage<T, U>> Entry<T, U, S>
