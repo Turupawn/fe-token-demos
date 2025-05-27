@@ -1,10 +1,7 @@
-use ingot::codec::{Encode, Decode}
-use ingot::operators::{Add, Sub, AddAssign, SubAssign}
-use ingot::mydefault::{MyDefault}
-
-pub trait Hasher {
-    fn hash<T: Encode>(mut self, key: T) -> u256
-}
+pub use std::codec::{Encode, Decode}
+pub use std::operators::{Add, Sub, AddAssign, SubAssign}
+pub use std::mydefault::{MyDefault}
+pub use ingot::hasher::{Hasher}
 
 pub trait MapStorage<T, U> {
     fn get(mut self, key: T) -> U
@@ -59,7 +56,7 @@ impl<T, U, S: MapStorage<T, U>> Entry<T, U, S>
 }
 
 impl<K, V, S> AddAssign<V> for Entry<K, V, S>
-    where 
+    where
         S: MapStorage<K, V>,
         V: Add
 {
@@ -78,7 +75,7 @@ impl<K, V, S> AddAssign<V> for Entry<K, V, S>
 }
 
 impl<K, V, S> SubAssign<V> for Entry<K, V, S>
-    where 
+    where
         S: MapStorage<K, V>,
         V: Sub
 {

@@ -1,0 +1,5 @@
+use std::codec::{Encode, Decode}
+
+pub trait Hasher {
+    fn hash<T: Encode>(mut self, key: T) -> u256
+}

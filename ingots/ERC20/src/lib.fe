@@ -1,5 +1,5 @@
-use ingot::evm
-use ingot::solidity
+use std::evm
+use solidity::map
 
 contract ERC20 {
     pub balance: solidity::Mapping<evm::Address, u256>,

@@ -5,7 +5,8 @@ Showcases modular and reusable components with type interfaces that are able to 
 ## Building
 
 ```
-fe check .
+fe check ingots/ERC20
+fe check ingots/ERC721
 ```
 
 ## License

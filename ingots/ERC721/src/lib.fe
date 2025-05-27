@@ -1,5 +1,5 @@
-use ingot::evm
-use ingot::solidity
+use std::evm
+use solidity::map
 
 contract ERC721 {
     pub owner_of: solidity::Mapping<u256, evm::Address>,
